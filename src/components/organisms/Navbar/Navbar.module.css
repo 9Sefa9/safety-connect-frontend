@@ -1,0 +1,10 @@
+.FlexCentered {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Navbar {
+    height: var(--navbar-height);
+}
