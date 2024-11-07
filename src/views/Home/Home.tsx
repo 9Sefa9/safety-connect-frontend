@@ -1,250 +1,81 @@
-import React, { useState } from 'react';
-import {
-    Box, Typography, Button, TextField, Checkbox, Radio, RadioGroup, FormControlLabel,
-    FormGroup, Slider, Switch, Table, TableBody, TableCell, TableContainer,
-    TableHead, TableRow, Paper, IconButton, Tabs, Tab, AppBar, CircularProgress,
-    Card, CardContent, CardActions, Grid, MenuItem, Select, Dialog, DialogActions,
-    DialogContent, DialogContentText, DialogTitle, Divider, Badge, Avatar,
-    Snackbar, Alert, Tooltip, Chip, Pagination, Drawer, Collapse, Step, StepLabel,
-    Stepper
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import mockData from '../../mock/mock-data.json';
-import { DatePicker, TimePicker } from '@mui/x-date-pickers';
-import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTime } from 'luxon';
-
-interface MockData {
-    title: string;
-    description: string;
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import kunststoffband from '../../assets/images/kunststoffband.png'
+import Kabelmesser from '../../assets/images/Kabelmesser.png'
+import { Box } from '@mui/material';
+import FullScreenDialog from '../../components/FullScreenDialog/FullScreenDialog';
+export default function Home() {
+  return (
+    <>
+      <FullScreenDialog />
+      <Box sx={{ overflow: 'scroll', height: '90%' }}>
+        <Card variant="outlined">
+          <Box sx={{ paddingLeft: '0.5rem', paddingRight: '0.5rem', overflowX: 'scroll', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row', gap: '1rem' }}>
+            <CardMedia
+              component="img" // Verwendet das img-Tag, um die natürliche Bildgröße beizubehalten
+              image={kunststoffband}
+              title="Unfall - Kunststoffband"
+              sx={{
+                height: 600,
+                objectFit: 'contain', // Verhindert das Zuschneiden des Bildes und behält die natürliche Größe bei
+              }}
+            />
+            <CardMedia
+              component="img" // Verwendet das img-Tag, um die natürliche Bildgröße beizubehalten
+              image={Kabelmesser}
+              title="Unfall - Kunststoffband"
+              sx={{
+                height: 600,
+                objectFit: 'contain', // Verhindert das Zuschneiden des Bildes und behält die natürliche Größe bei
+              }}
+            />
+          </Box>
+          <CardContent>
+            <hr />
+            <Typography gutterBottom variant="h4" >
+              <strong>Was ist passiert ?</strong>
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'text.primary' }}>
+              <em>Vorfall</em>: Beim Auspacken eines Pakets im Schneidzentrum 5 schnitt der Mitarbeiter die Kunststoffbänder mit einem Kabelmesser durch. Anschließend wollte er die Kunststoffbänder unter der Palette herausziehen. Dabei hielt er das Kabelmesser in der anderen Hand und zog sich eine tiefe Schnittwunde am Finger zu, die mit sechs Stichen genäht werden musste. Der Mitarbeiter trug keine Schutzhandschuhe.
+              Der Angestellte wurde im Umgang mit Sicherheitsmessern beim Auspacken von Paketen geschult.
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'red' }}>
+              <strong>Verletzung: Schnittwunde am rechten Ringfinger.</strong>
+            </Typography>
+            <hr />
+            <Typography gutterBottom variant="h4" >
+              <strong>Was war der Grund ?</strong>
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'text.primary' }}>
+              <ul>
+                <li>Falsches Messer verwendet</li>
+                <li>Keine Schutzhandschuhe getragen</li>
+                <li>Fehlverhalten des Mitarbeiters</li>
+              </ul>
+            </Typography>
+            <hr />
+            <Typography gutterBottom variant="h4" >
+              <strong>Wie können wir das vermeiden ?</strong>
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'text.primary' }}>
+              <ul>
+                <li>Mitarbeitergespräch führen</li>
+                <li>Messerplan beachten</li>
+                <li>Erneute Schulung</li>
+              </ul>
+            </Typography>
+            <hr />
+          </CardContent>
+          {/* <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions> */}
+        </Card>
+      </Box>
+    </>
+  );
 }
-
-const Home: React.FC = () => {
-    const [openDialog, setOpenDialog] = useState<boolean>(false);
-    const [tabValue, setTabValue] = useState<number>(0);
-    const [sliderValue, setSliderValue] = useState<number>(30);
-    const [selectedDate, setSelectedDate] = useState<DateTime | null>(DateTime.now());
-    const [selectedTime, setSelectedTime] = useState<DateTime | null>(DateTime.now());
-    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-    const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-    const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
-    const [activeStep, setActiveStep] = useState<number>(0);
-    const [page, setPage] = useState<number>(1);
-    const steps = ['Step 1', 'Step 2', 'Step 3'];
-
-    const handleDialogOpen = () => setOpenDialog(true);
-    const handleDialogClose = () => setOpenDialog(false);
-    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => setTabValue(newValue);
-    const handleSliderChange = (event: Event, newValue: number | number[]) => setSliderValue(newValue as number);
-    const handleSnackbarClose = () => setOpenSnackbar(false);
-    const toggleDrawer = () => setDrawerOpen(!drawerOpen);
-    const handleCollapseToggle = () => setCollapseOpen(!collapseOpen);
-    const handleNextStep = () => {
-        if (activeStep < steps.length - 1) {
-            setActiveStep(activeStep + 1);
-        }
-    };
-
-    // Handle pagination change
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value);
-    };
-
-    return (
-        <Box className="PageContainer">
-            {/* Typographies */}
-            <Typography variant="h1">Heading 1</Typography>
-            <Typography variant="h2">Heading 2</Typography>
-            <Typography variant="body1">This is body text</Typography>
-            <Divider />
-
-            {/* Buttons */}
-            <Tooltip title="Show Snackbar">
-                <Button variant="contained" onClick={() => setOpenSnackbar(true)}>Show Snackbar</Button>
-            </Tooltip>
-            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-                    This is a success message!
-                </Alert>
-            </Snackbar>
-            <Tooltip title="Outlined Button">
-                <Button variant="outlined">Outlined Button</Button>
-            </Tooltip>
-            <Tooltip title="Text Button">
-                <Button variant="text">Text Button</Button>
-            </Tooltip>
-            <Tooltip title="Delete">
-                <IconButton aria-label="delete">
-                    <DeleteIcon />
-                </IconButton>
-            </Tooltip>
-            <Divider />
-
-            {/* Form Elements */}
-            <TextField label="Text Field" variant="outlined" />
-            <FormGroup>
-                <FormControlLabel control={<Checkbox />} label="Checkbox" />
-                <FormControlLabel control={<Switch />} label="Switch" />
-            </FormGroup>
-            <RadioGroup defaultValue="option1">
-                <FormControlLabel value="option1" control={<Radio />} label="Option 1" />
-                <FormControlLabel value="option2" control={<Radio />} label="Option 2" />
-            </RadioGroup>
-            <Divider />
-
-            {/* Date and Time Pickers */}
-            <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="de">
-                <DatePicker
-                    label="Date Picker"
-                    value={selectedDate}
-                    onChange={(newValue) => setSelectedDate(newValue)}
-                    slots={{
-                        textField: textFieldProps => <TextField {...textFieldProps} />
-                    }}
-                />
-                <TimePicker
-                    label="Time Picker"
-                    value={selectedTime}
-                    onChange={(newValue) => setSelectedTime(newValue)}
-                    slots={{
-                        textField: textFieldProps => <TextField {...textFieldProps} />
-                    }}
-                />
-            </LocalizationProvider>
-            <Divider />
-
-            {/* Select and Slider */}
-            <Select value={sliderValue} onChange={(e) => setSliderValue(Number(e.target.value))}>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-            <Slider value={sliderValue} onChange={handleSliderChange} aria-labelledby="continuous-slider" />
-            <Divider />
-
-            {/* Table */}
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Description</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {mockData.map((item: MockData) => (
-                            <TableRow key={item.title}>
-                                <TableCell>{item.title}</TableCell>
-                                <TableCell>{item.description}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Divider />
-
-            {/* Pagination */}
-            <Pagination count={10} page={page} onChange={handlePageChange} />
-            <Divider />
-
-            {/* Tabs */}
-            <AppBar position="static">
-                <Tabs value={tabValue} onChange={handleTabChange}>
-                    <Tab label="Tab 1" />
-                    <Tab label="Tab 2" />
-                    <Tab label="Tab 3" />
-                </Tabs>
-            </AppBar>
-            {tabValue === 0 && <Typography>Tab 1 Content</Typography>}
-            {tabValue === 1 && <Typography>Tab 2 Content</Typography>}
-            {tabValue === 2 && <Typography>Tab 3 Content</Typography>}
-            <Divider />
-
-            {/* Card */}
-            <Card>
-                <CardContent>
-                    <Typography variant="h5">Card Title</Typography>
-                    <Typography variant="body2">Card Content</Typography>
-                    <Chip label="Sample Chip" onDelete={() => {}} />
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Action</Button>
-                </CardActions>
-            </Card>
-            <Divider />
-
-            {/* Dialog */}
-            <Button variant="contained" onClick={handleDialogOpen}>
-                Open Dialog
-            </Button>
-            <Dialog open={openDialog} onClose={handleDialogClose}>
-                <DialogTitle>Dialog Title</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        This is a sample dialog.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDialogClose}>Close</Button>
-                </DialogActions>
-            </Dialog>
-            <Divider />
-
-            {/* Progress */}
-            <CircularProgress />
-            <Divider />
-
-            {/* Grid */}
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <Paper>Grid Item 1</Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Paper>Grid Item 2</Paper>
-                </Grid>
-            </Grid>
-            <Divider />
-
-            {/* Badges and Avatars */}
-            <Badge badgeContent={4} color="primary">
-                <Avatar alt="User" />
-            </Badge>
-            <Divider />
-
-            {/* Drawer */}
-            <Button variant="outlined" onClick={toggleDrawer}>Toggle Drawer</Button>
-            <Drawer open={drawerOpen} onClose={toggleDrawer}>
-                <Box sx={{ width: 250 }}>
-                    <Typography variant="h6">Drawer Content</Typography>
-                    <Button onClick={toggleDrawer}>Close Drawer</Button>
-                </Box>
-            </Drawer>
-            <Divider />
-
-            {/* Collapse */}
-            <Button variant="outlined" onClick={handleCollapseToggle}>
-                {collapseOpen ? 'Collapse' : 'Expand'}
-            </Button>
-            <Collapse in={collapseOpen}>
-                <Box sx={{ p: 2, bgcolor: 'lightgray' }}>
-                    This is collapsible content.
-                </Box>
-            </Collapse>
-            <Divider />
-
-            {/* Stepper */}
-            <Stepper activeStep={activeStep}>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            <Button onClick={handleNextStep}>Next Step</Button>
-        </Box>
-    );
-};
-
-export default Home;

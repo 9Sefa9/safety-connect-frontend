@@ -22,10 +22,10 @@ function App() {
     return (
         <div className="App">
             <CssBaseline />
+            <Navbar />
             <div className="AppContainer">
-                <Navbar />
                 <Outlet />
-                <BottomNav />
+                {/* <BottomNav /> */}
             </div>
         </div>
     )

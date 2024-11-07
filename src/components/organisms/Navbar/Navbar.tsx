@@ -5,12 +5,11 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import UserAvatar from '../../molecules/UserAvatar/UserAvatar';
-
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { Route } from '../../../router';
 import userAvatarImage from '../../../assets/images/user.png';
 
@@ -45,9 +44,9 @@ const Navbar = () => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
                     <Box onClick={() => navigate(Route.ROOT)} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                        <RocketLaunchIcon sx={{ mr: 1 }} />
+                        <HealthAndSafetyIcon sx={{ mr: 1 }} />
                         <Typography variant="h6" noWrap>
-                            MY-APP
+                            Safety-Connect
                         </Typography>
                     </Box>
 
@@ -77,7 +76,7 @@ const Navbar = () => {
                         </Menu>
                     </Box>
 
-                    <IconButton onClick={handleOpenUserMenu}>
+                    {/* <IconButton onClick={handleOpenUserMenu}>
                         <UserAvatar
                             avatarImageAlt="user-avatar"
                             avatarImage={userAvatarImage}
@@ -93,7 +92,7 @@ const Navbar = () => {
                         onClose={handleCloseUserMenu}
                     >
                         <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
-                    </Menu>
+                    </Menu> */}
                 </Toolbar>
             </Container>
         </AppBar>
